@@ -4,27 +4,51 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dio.womensfootballnews.data.remote.WomensNewsAPI;
 import com.dio.womensfootballnews.domain.News;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class NewsViewModel extends ViewModel {
 
-    private final MutableLiveData<List<News>> news;
+    private final MutableLiveData<List<News>> news = new MutableLiveData<>();
+    private final WomensNewsAPI api;
 
     public NewsViewModel() {
-        this.news = new MutableLiveData<>();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://1994douglas-ferreira.github.io/WomensFootballNewsAPI/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api = retrofit.create(WomensNewsAPI.class);
+        this.findNews();
 
-        //TODO Remover mock de notices
+    }
 
-        List<News> news = new ArrayList<>();
-        news.add(new News("Pronunciamento do clube","Sport repudia \"qualquer ato de racismo\" e diz que está apurando caso relatado por jogadora na Ilha"));
-        news.add(new News("Novas responsabilidades","Pia distribui liderança na Seleção com ausência da capitã Marta na Copa América"));
-        news.add(new News("Brasil campeão!","Seleção sofre, mas Debinha resolve e garante título da Copa América Feminina com recordes"));
+    private void findNews() {
+        api.getNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                if(response.isSuccessful()){
+                    news.setValue(response.body());
+                }else{
+                    //TODO Pensar em uma estrategia de tratamento de erros
 
-        this.news.setValue(news);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                //TODO Pensar em uma estrategia de tratamento de erros
+
+            }
+        });
     }
 
     public LiveData<List<News>> getNews() {return news;}

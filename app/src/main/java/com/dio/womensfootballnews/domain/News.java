@@ -1,20 +1,17 @@
 package com.dio.womensfootballnews.domain;
 
 public class News {
-    private String tittle;
+    private String title;
     private String description;
+    private String image;
+    private String link;
 
-    public News(String tittle, String description) {
-        this.tittle = tittle;
-        this.description = description;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTittle() {
-        return tittle;
-    }
-
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -23,5 +20,21 @@ public class News {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

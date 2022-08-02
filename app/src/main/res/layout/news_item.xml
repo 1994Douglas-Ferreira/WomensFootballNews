@@ -16,7 +16,6 @@
             android:id="@+id/ivThumbnail"
             android:layout_width="0dp"
             android:layout_height="160dp"
-            android:background="@android:color/background_dark"
             android:contentDescription="@string/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -26,7 +25,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvTittle"
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_margin"
@@ -46,7 +45,7 @@
             android:layout_marginEnd="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTittle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOpenLink"

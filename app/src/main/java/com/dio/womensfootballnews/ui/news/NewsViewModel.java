@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.dio.womensfootballnews.data.remote.WomensNewsAPI;
 import com.dio.womensfootballnews.domain.News;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,7 +22,7 @@ public class NewsViewModel extends ViewModel {
 
     public NewsViewModel() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://1994douglas-ferreira.github.io/WomensFootballNewsAPI/")
+                .baseUrl("https://1994douglas-ferreira.github.io/womens-football-news-api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(WomensNewsAPI.class);

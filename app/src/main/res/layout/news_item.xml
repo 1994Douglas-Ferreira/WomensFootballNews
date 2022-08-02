@@ -16,6 +16,7 @@
             android:id="@+id/ivThumbnail"
             android:layout_width="0dp"
             android:layout_height="160dp"
+            android:background="@android:color/background_dark"
             android:contentDescription="@string/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -34,8 +35,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivThumbnail"
-            tools:text="Corinthians Campeão" />
+            app:layout_constraintTop_toBottomOf="@+id/ivThumbnail" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvDescription"
@@ -46,8 +46,7 @@
             android:layout_marginEnd="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTittle"
-            tools:text="Corinthians vence Flamengo por 2 x 0 e se sagra campeão" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTittle" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOpenLink"
@@ -67,21 +66,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_margin"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/iv_favorites"
+            android:focusable="true"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/btnOpenLink"
             app:layout_constraintEnd_toStartOf="@+id/ivShare"
             app:layout_constraintTop_toTopOf="@+id/btnOpenLink"
-            app:srcCompat="@drawable/ic_favorites"
-            android:contentDescription="@string/iv_favorites" />
+            app:srcCompat="@drawable/ic_favorites" />
 
         <ImageView
             android:id="@+id/ivShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_margin"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/iv_share"
+            android:focusable="true"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/btnOpenLink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnOpenLink"
-            app:srcCompat="@drawable/ic_share"
-            android:contentDescription="@string/iv_share" />
+            app:srcCompat="@drawable/ic_share" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

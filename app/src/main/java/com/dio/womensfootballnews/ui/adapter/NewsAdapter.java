@@ -1,5 +1,7 @@
 package com.dio.womensfootballnews.ui.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dio.womensfootballnews.databinding.NewsItemBinding;
 import com.dio.womensfootballnews.domain.News;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    private List<News> news;
+    private final List<News> news;
 
     public NewsAdapter(List<News> news){
         this.news = news;
@@ -32,6 +35,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
        News news = this.news.get(position);
        holder.binding.tvTitle.setText(news.getTitle());
         holder.binding.tvDescription.setText(news.getDescription());
+        Picasso.get().load(news.getImage()).fit().into(holder.binding.ivThumbnail);
+        holder.binding.btnOpenLink.setOnClickListener(view -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(news.getLink()));
+            holder.itemView.getContext().startActivity(i);
+        });
     }
 
     @Override

@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.dio.womensfootballnews.MainActivity;
 import com.dio.womensfootballnews.databinding.FragmentFavoritesBinding;
+import com.dio.womensfootballnews.domain.News;
+import com.dio.womensfootballnews.ui.adapter.NewsAdapter;
+
+import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
@@ -22,11 +27,25 @@ public class FavoritesFragment extends Fragment {
                 new ViewModelProvider(this).get(FavoritesViewModel.class);
 
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        final TextView textView = binding.textFavorites;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+
+
+        loadFavoriteNews();
+        return binding.getRoot();
+    }
+
+
+    private void loadFavoriteNews() {
+        MainActivity mActivity = (MainActivity) getActivity();
+
+        if (mActivity != null) {
+            List<News> favoriteNews = mActivity.getDb().newsDao().loadFavoriteNews();
+            binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
+            binding.rvNews.setAdapter(new NewsAdapter(favoriteNews, updatedNews-> {
+                mActivity.getDb().newsDao().save(updatedNews);
+                loadFavoriteNews();
+            }));
+        }
     }
 
     @Override

@@ -62,11 +62,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             this.favoriteListener.onFavorite(news);
             notifyItemChanged(position);
         });
-        if(news.favorite){
-            holder.binding.ivFavorites.setColorFilter(context.getResources().getColor(R.color.red));
-        }else{
-            holder.binding.ivFavorites.setColorFilter(context.getResources().getColor(R.color.black));
-        }
+        int favoriteColor = news.favorite ? R.color.green_500 : R.color.black;
+        holder.binding.ivFavorites.setColorFilter(context.getResources().getColor(favoriteColor));
     }
 
     @Override

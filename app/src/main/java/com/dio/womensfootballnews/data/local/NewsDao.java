@@ -13,7 +13,7 @@ import java.util.List;
 public interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE  )
-    void insertNews(News... news);
+    void save(News... news);
 
     @Query("SELECT * FROM News WHERE favorite = 1")
     List<News> loadFavoriteNews();

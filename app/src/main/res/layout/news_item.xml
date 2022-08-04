@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/btnOpenLink"
             app:layout_constraintEnd_toStartOf="@+id/ivShare"
             app:layout_constraintTop_toTopOf="@+id/btnOpenLink"
-            app:srcCompat="@drawable/ic_favorites" />
+            app:srcCompat="@drawable/ic_favorite" />
 
         <ImageView
             android:id="@+id/ivShare"

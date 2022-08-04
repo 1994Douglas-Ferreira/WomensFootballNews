@@ -1,9 +1,13 @@
 package com.dio.womensfootballnews.ui.news;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.room.Room;
 
+import com.dio.womensfootballnews.data.local.AppDatabase;
 import com.dio.womensfootballnews.data.remote.WomensNewsAPI;
 import com.dio.womensfootballnews.domain.News;
 
@@ -20,12 +24,15 @@ public class NewsViewModel extends ViewModel {
     private final MutableLiveData<List<News>> news = new MutableLiveData<>();
     private final WomensNewsAPI api;
 
+
     public NewsViewModel() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://1994douglas-ferreira.github.io/womens-football-news-api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(WomensNewsAPI.class);
+
+
         this.findNews();
 
     }

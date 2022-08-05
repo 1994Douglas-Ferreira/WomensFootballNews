@@ -10,51 +10,52 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.dio.womensfootballnews.MainActivity;
-import com.dio.womensfootballnews.data.local.AppDatabase;
+import com.dio.womensfootballnews.R;
 import com.dio.womensfootballnews.databinding.FragmentNewsBinding;
 import com.dio.womensfootballnews.ui.adapter.NewsAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 public class NewsFragment extends Fragment {
 
     private FragmentNewsBinding binding;
-    private AppDatabase db;
+    private NewsViewModel newsViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        NewsViewModel homeViewModel =
-                new ViewModelProvider(this).get(NewsViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
 
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
         binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
-        homeViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
-            binding.rvNews.setAdapter(new NewsAdapter(news, updatedNews-> {
-                MainActivity mActivity = (MainActivity) getActivity();
-                if (mActivity != null) {
-                    mActivity.getDb().newsDao().save(updatedNews);
-                }
-            }));
-        });
 
-        homeViewModel.getState().observe(getViewLifecycleOwner(), state -> {
-            switch (state){
-                case DOING:
-                    //TODO iniciar SwipeRefreshLayout (loading)
-                    break;
-                case DONE:
-                    //TODO finalizar SwipeRefreshLayout (loading)
-                    break;
-                case ERROR:
-                    //TODO finalizar SwipeRefreshLayout (loading)
-                    //TODO mostrar um erro generico
-            }
-        });
+        observeNews();
+        observeStates();
+
+        binding.srlNews.setOnRefreshListener(newsViewModel::findNews);
 
         return root;
+    }
+
+    private void observeNews() {
+        newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
+            binding.rvNews.setAdapter(new NewsAdapter(news, newsViewModel::saveNews));
+        });
+    }
+
+    private void observeStates() {
+        newsViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case DOING:
+                    binding.srlNews.setRefreshing(true);
+                    break;
+                case DONE:
+                    binding.srlNews.setRefreshing(false);
+                    break;
+                case ERROR:
+                    binding.srlNews.setRefreshing(false);
+                    Snackbar.make(binding.srlNews, R.string.error_network, Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -62,6 +63,4 @@ public class NewsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-
 }

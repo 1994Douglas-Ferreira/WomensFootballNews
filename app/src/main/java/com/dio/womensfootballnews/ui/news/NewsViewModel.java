@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dio.womensfootballnews.data.WomensNewsRepository;
-import com.dio.womensfootballnews.data.remote.WomensNewsAPI;
 import com.dio.womensfootballnews.domain.News;
 
 import java.util.List;
@@ -16,8 +15,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsViewModel extends ViewModel {
 
@@ -47,12 +44,13 @@ public class NewsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<List<News>> call, Throwable error) {
-                //FIXME Tirar o printStackTrace quando formos para produção!
-                error.printStackTrace();
+
                 state.setValue(State.ERROR);
             }
         });
+
     }
+
 
     public void saveNews(News news) {
         AsyncTask.execute(() -> WomensNewsRepository.getInstance().getLocalDb().newsDao().save(news));
